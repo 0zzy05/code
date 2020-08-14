@@ -1,0 +1,58 @@
+
+
+// How to push to crm from creator - normal fields, images and subforms. 
+
+first_subform = list();
+//
+// first subform
+for each  row_1 in additional_boiler_subform
+{
+	line_1 = {"Additional_Boiler_Expiry_Date":row_1.boiler_certificate_valid_until_sub,"Additional_Make_And_Model":row_1.make_model_sub,"Additional_Boiler_age_years":row_1.boiler_age_years_sub};
+	first_subform.add(line_1);
+	//
+	attach_file_resp_adb_1 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),row_1.evidence_of_boiler_certificate_sub);
+	attach_file_resp_adb_2 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),row_1.picture_boiler_sub);
+	attach_file_resp_adb_3 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),row_1.benchmark_book_upload_sub);
+}
+//
+// second subform
+second_subform = list();
+//
+for each  row_2 in availability_subform
+{
+	second_subform.add({"Available_Date":row_2.date_field,"Am_Or_Pm":row_2.am_pm});
+}
+//
+crm_push = {"Boiler_Expiry_Date":input.boiler_certificate_valid_until,"gas_certificate_valid_until":input.gas_certificate_valid_until,"Boiler_age_years":input.boiler_age_years,"Cover_Address_First_Line":input.first_line_address,"Cover_Address_Postcode":input.postcode,"comments":input.comments,"EICR_PAT_Test":input.ecir_pat,"Fuel_Type":input.fuel_type,"tenant_email":input.tenant_email,"Gas_Safety_Certificate_Appliances_And_Locations":input.appliances_location,"Make_And_Model":input.make_model,"Tenant_Full_Name":input.tenant_name,"Tenant_Phone_Number":input.tenant_phone_number,"Client_Type":input.landlord_or_homeowner};
+crm_push.put("Additional_Boilers2",first_subform);
+crm_push.put("Availability_Dates",second_subform);
+//
+if(deal_id != NULL && deal_id != "")
+{
+	update_resp = zoho.crm.updateRecord("Deals",input.deal_id.toLong(),crm_push);
+	attach_file_resp = zoho.crm.attachFile("Deals",input.deal_id.toLong(),input.evidence_of_boiler_certificate);
+	attach_file_resp1 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),input.evidence_of_gas_certificate);
+	attach_file_resp2 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),input.picture_boiler);
+	attach_file_resp3 = zoho.crm.attachFile("Deals",input.deal_id.toLong(),input.benchmark_book_upload);
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  Publish form style
+  input.note_style = "<style> h1.zc-label-text {    max-width: none !important;}.zc-form-embed .zc-form-fullheight {    display: table;    min-height: 100% !important;}.zc-form-embed form .formContainer .subform-inner-wrapper .dual-column .first-column,.zc-form-embed form .formContainer .subform-inner-wrapper .dual-column .second-column {    max-width: none;}.zc-form-embed form .formContainer .subform-inner-wrapper .mono-column .first-column {    max-width: none;}.zc-form-embed .zc-form-fullheight .form-outer-wrapper {    padding: 20px 0;    display: table-cell;    vertical-align: middle;}.zc-form-embed .page_content_wrapper .form-table {    width: auto;    margin: 0 auto;    display: table;    border: 1px solid #E6E6E6;}.zc-form-embed .page_content_wrapper {    margin-left: 0;}.zc-form-embed .page_content_wrapper .form-outer-wrapper .form-table {    margin: 0 auto;}.form-group.zc-production_type-group .form-field {    margin-right: 7.5rem;    float: right !important;}.form-field.mediumSizeLive {    max-width: 240px !important;}.zcform_RiskForm .first-column .form-field {    width: 473px !important;    margin-left: auto;    float: none !important;}.form-table {    width: auto !important;    border-radius: 0.6em !important;    background-color: white !important}.zc-live-primary-btn, .zc-formbutton, #ze_popups .ze_botpart input:first-child {background-color: #f2705e;} .form-action.formbutton {    border-radius: 0em 0em 0.5em 0.5em !important;    text-align: center;    background-color: white !important;}.form-outer-wrapper {    vertical-align: baseline !important;    background-color: #232329 !important;} .form-header .form-title { color: white;}!important; .grids {    display: flex;    justify-content: space-between;    align-items: flex-end;}.zc-help-txt {    width: auto !important}.formbutton label.form-label {    display: none;}.zc-form-fullheight .form-outer-wrapper .formContainer {    padding: 1% 5% !important;    max-width: 78em !important;    border-radius: 0.5em 0.5em 0em 0em !important;}.mono-column.column-block {    justify-content: center !important;}.form-group.clearfix.zc-addnote-fld {    margin-bottom: 20px;    width: 100%;}.notes-field {    width: 100% !important;}.page_content_wrapper.container-fixed>.zcform_RiskForm>.form-outer-wrapper {    background-color: white !important;}.form-label.zc-dem-clearfix.zc-production_type-label.zc_picklist_label {max-width: 380px !important;}.form-group.clearfix.form-richtext-field {    padding-left: 25% !important;}.zc-form-container .zc-form-fullheight, .zc-form-container .form-outer-wrapper, .zc-form-container .form-outer-wrapper>.row, .zc-form-container .form-outer-wrapper>.row .form-table, .zc-subform-header-fixed .zc-form-container.zc-form-edit-container .form-outer-wrapper .row .form-table {height:auto}.form-group.subform-outer-wrapper.zc-Availability-group.zc-subform-field-group{margin-left: auto !important; margin-right: auto;}</style><div class='grids'><div><img height='100'width='300'src='https://www.betterhomecover.com/wp-content/uploads/2020/08/BH_Cover_Logo_DOG_NOSTRAP_RGB-1-1.svg' style=' display: block; margin-right:1.5em; ''/></div><div><h1 style='color :#002d6a;'>Date Availability Form</h1></div><div style='width: 90rem;'></div></div>";
+  
+  
+  
+  
+}
