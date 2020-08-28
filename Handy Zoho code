@@ -56,3 +56,75 @@ if(deal_id != NULL && deal_id != "")
   
   
 }
+
+
+response = invokeurl
+[
+	url :" https://sign.zoho.eu/api/v1/templates/15443000000009003"
+	type :GET
+	connection:"sign"
+];
+//info response;
+action_123 = response.get("templates").get("actions");
+sign_action = null;
+for each  action in action_123
+{
+	role = action.get("role");
+	if(role = "Signer")
+	{
+		sign_action = action.get("action_id");
+	}
+}
+actionMap = Map();
+fieldTextData = Map();
+fieldTextData.put("TextField_1","Document to Review");
+actionMap.put("field_data",{"field_text_data":fieldTextData});
+eachActionMap1 = Map();
+eachActionMap1.put("recipient_name","owen");
+//info response;
+action_123 = response.get("templates").get("actions");
+sign_action = null;
+for each  action in action_123
+{
+	role = action.get("role");
+	if(role = "Signer")
+	{
+		sign_action = action.get("action_id");
+	}
+}
+actionMap = Map();
+fieldTextData = Map();
+fieldTextData.put("TextField_1","Document to Review");
+actionMap.put("field_data",{"field_text_data":fieldTextData});
+eachActionMap1 = Map();
+eachActionMap1.put("recipient_name","owen");
+eachActionMap1.put("recipient_email",email);
+eachActionMap1.put("action_type","SIGN");
+eachActionMap1.put("action_id",sign_action.toString());
+eachActionMap1.put("role","Reviewer");
+eachActionMap1.put("verify_recipient","false");
+fieldList = List();
+fieldList.add(eachActionMap1);
+actionMap.put("actions",fieldList);
+submitMap = Map();
+submitMap.put("templates",actionMap);
+parameters = Map();
+parameters.put("is_quicksend","true");
+parameters.put("data",submitMap);
+response = zoho.sign.createUsingTemplate(15443000000009003,parameters);
+eachActionMap1.put("action_type","SIGN");
+eachActionMap1.put("action_id",sign_action.toString());
+eachActionMap1.put("role","Reviewer");
+eachActionMap1.put("verify_recipient","false");
+fieldList = List();
+fieldList.add(eachActionMap1);
+actionMap.put("actions",fieldList);
+submitMap = Map();
+submitMap.put("templates",actionMap);
+parameters = Map();
+parameters.put("is_quicksend","true");
+parameters.put("data",submitMap);
+response = zoho.sign.createUsingTemplate(15443000000009003,parameters);
+info response;
+
+zoho sihn send from template
